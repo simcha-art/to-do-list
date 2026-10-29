@@ -1,10 +1,11 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import os
 from flask_cors import CORS
-from .routes import missions_router, users_router
+from routes.users_router import router as users_router
+from routes.missions_router import router as missions_router
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path="./.env")
+load_dotenv()
 
 app = Flask(__name__)
 CORS(
@@ -16,11 +17,18 @@ CORS(
 @app.before_request
 def logger():
     print(f"{request.method}/{request.url}")
-    print(f"query: {request.args}, body: {request.get_json()}")
+    print(f"query: {request.args.__dict__}, body: {request.get_json(silent=True)}")
 
-    
-app.register_blueprint(missions_router.router, url_prefix="/missions")
-app.register_blueprint(users_router.router, url_prefix="/users")
+@app.route("/health")
+def health():
+    return jsonify({"health": "server is on"}), 200
 
+app.register_blueprint(missions_router, url_prefix="/missions")
+app.register_blueprint(users_router, url_prefix="/users")
+
+@app.errorhandler
+def handler_error(e: Exception):
+    print(str(e))
+    return e, 500
 
 app.run(port=int(os.getenv("PORT", 3000)))

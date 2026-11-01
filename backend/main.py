@@ -29,6 +29,6 @@ app.register_blueprint(users_router, url_prefix="/users")
 @app.errorhandler
 def handler_error(e: Exception):
     print(str(e))
-    return e, 500
-
+    code = e.code | 500
+    return e, code
 app.run(port=int(os.getenv("PORT", 3000)))

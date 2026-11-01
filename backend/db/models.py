@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase, relationship
 from sqlalchemy import ForeignKey, func
-from connection import engine
+from .connection import engine
 from typing import List
 from datetime import datetime, date
 
@@ -20,6 +20,16 @@ class User(Base):
     def __repr__(self):
         return f"User(id={self.id}, name={self.name}, email={self.email}, password=****)"
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "missions": [mission.to_dict() for mission in self.missions]
+        }
+
+
 class Mission(Base):
     __tablename__ = "missions"
 
@@ -35,5 +45,17 @@ class Mission(Base):
     def __repr__(self):
         return f"Mission(id={self.id}, title={self.title}, desc={self.desc}, date={self.date}, is_finished={self.is_finished}, created_at={self.created_at}, user_id={self.user_id})"
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "desc": self.desc,
+            "date": self.date,
+            "is_finished": self.is_finished,
+            "created_at": self.created_at,
+            "user_id": self.user_id,
+        }
+
+    
 
 Base.metadata.create_all(bind=engine)

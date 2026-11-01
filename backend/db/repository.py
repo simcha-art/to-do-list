@@ -1,4 +1,4 @@
-from models import User, Mission
+from .models import User, Mission
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 import bcrypt

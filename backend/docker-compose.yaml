@@ -1,0 +1,16 @@
+services:
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: simcha
+      POSTGRES_PASSWORD: simcha
+      POSTGRES_DB: to-dos
+    ports:
+      - "5432:5432"
+    volumes:
+      - to-dos-data:/var/lib/postgresql/data
+
+volumes:
+  to-dos-data:

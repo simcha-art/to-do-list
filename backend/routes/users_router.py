@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import abort
 from db.connection import session
 from db.repository import UserRepository
+from services.users_service import valid_new_user, valid_update_user
 
 
 router = Blueprint("users", __name__)
@@ -20,16 +21,21 @@ def get_user():
 
 @router.post("")
 def create_user():
-    return "not implemented", 201
+    body = request.get_json()
+    valid_data = valid_new_user(body)
+    with session() as current_session:
+        new_user = UserRepository(current_session).create(valid_data).to_dict()
+
+    return jsonify({"success": True, "data": new_user}), 201
 
 @router.put("/<string:id>")
 def update_user_details(id):
     body = request.get_json()
-    data = {key: val for key, val in body.items() if key != "id"}
+    valid_data = valid_update_user(body)
     with session() as current_session:
         origin_user = UserRepository(current_session).get_by_id(id)
         if not origin_user:
             abort(404, "user not found")
-        updated_user = UserRepository(current_session).update(origin_user, data).to_dict()
+        updated_user = UserRepository(current_session).update(origin_user, valid_data).to_dict()
     return jsonify({"success": True, "data": updated_user})
 

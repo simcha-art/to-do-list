@@ -33,7 +33,7 @@ class UserRepository(BaseRepository):
     def __init__(self, session):
         super().__init__(session, User)
 
-    def create(self, data):
+    def create(self, data) -> User:
         data["password"] = bcrypt.hashpw(data["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
         return super().create(data)
 

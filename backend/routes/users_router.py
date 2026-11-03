@@ -20,8 +20,16 @@ def get_user():
 
 @router.post("")
 def create_user():
-    return "not implemented", 200
+    return "not implemented", 201
 
 @router.put("/<string:id>")
 def update_user_details(id):
-    return "not implemented", 200
+    body = request.get_json()
+    data = {key: val for key, val in body.items() if key != "id"}
+    with session() as current_session:
+        origin_user = UserRepository(current_session).get_by_id(id)
+        if not origin_user:
+            abort(404, "user not found")
+        updated_user = UserRepository(current_session).update(origin_user, data).to_dict()
+    return jsonify({"success": True, "data": updated_user})
+

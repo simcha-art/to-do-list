@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 function RegisterPage() {
   const navigate = useNavigate()
-  function onSuccess(id: number) {
-    navigate(`/user-details/${id}`)
+  function onSuccess() {
+    navigate(`/user-details`)
   }
   return (
     <>

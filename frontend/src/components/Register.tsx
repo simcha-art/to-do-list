@@ -3,7 +3,6 @@ import {
     PasswordInput,
     Button,
     Title,
-    Center,
     Paper,
     Stack,
 } from "@mantine/core";
@@ -11,7 +10,8 @@ import {
 import { useForm } from "@mantine/form";
 import axios from "axios";
 import type { User } from "../../types";
-import { useNavigate } from "react-router-dom";
+import { useSetAtom } from "jotai";
+import { UserAtom } from "../../atoms/UserAtom";
 
 interface RegisterValues {
     name: string;
@@ -19,8 +19,8 @@ interface RegisterValues {
     password: string;
 }
 
-function Register({onSuccess}: {onSuccess: (id: number) => void}) {
-    const navigate = useNavigate();
+function Register({ onSuccess }: { onSuccess: () => void }) {
+    const setUser = useSetAtom(UserAtom);
     const form = useForm<RegisterValues>({
         initialValues: {
             name: "",
@@ -35,9 +35,14 @@ function Register({onSuccess}: {onSuccess: (id: number) => void}) {
                 values,
             );
             const new_user: User = response.data.data;
+            setUser({
+                id: new_user.id,
+                name: new_user.name,
+                email: new_user.email,
+            });
             if (onSuccess) {
-                onSuccess(new_user.id)
-            };
+                onSuccess();
+            }
         } catch (error) {
             console.log(error);
         }

@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai";
-import { UserAtom } from "../../atoms/UserAtom";
+import { UserAtom } from "../atoms/UserAtom";
 import UserDetailsCard from "../components/UserDetailsCard";
 import UpdateUserDetails from "../components/UpdateUserDetails";
 import { useState } from "react";

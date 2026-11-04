@@ -9,9 +9,9 @@ import {
 
 import { useForm } from "@mantine/form";
 import axios from "axios";
-import type { User } from "../../types";
+import type { User } from "../types";
 import { useSetAtom } from "jotai";
-import { UserAtom } from "../../atoms/UserAtom";
+import { UserAtom } from "../atoms/UserAtom";
 
 interface RegisterValues {
     name: string;

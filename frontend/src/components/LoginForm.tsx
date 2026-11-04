@@ -8,9 +8,9 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import axios from "axios";
-import { UserAtom } from "../../atoms/UserAtom";
+import { UserAtom } from "../atoms/UserAtom";
 import { useSetAtom } from "jotai";
-import type { User } from "../../types";
+import type { User } from "../types";
 
 
 

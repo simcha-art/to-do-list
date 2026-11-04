@@ -1,5 +1,5 @@
 import { Center, Card, Title, Text, Divider, Flex, Button } from "@mantine/core";
-import type { User } from "../../types";
+import type { User } from "../types";
 export interface UserCardProps {
     user: User,
     toggle: () => void

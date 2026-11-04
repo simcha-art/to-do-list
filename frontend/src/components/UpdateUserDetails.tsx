@@ -10,7 +10,7 @@ import {
 import type { UserCardProps } from "./UserDetailsCard";
 import { useForm } from "@mantine/form";
 import { useSetAtom } from "jotai";
-import { UserAtom } from "../../atoms/UserAtom";
+import { UserAtom } from "../atoms/UserAtom";
 import axios from "axios";
 
 interface User {

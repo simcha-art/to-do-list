@@ -11,7 +11,7 @@ import type { UserCardProps } from "./UserDetailsCard";
 import { useForm } from "@mantine/form";
 import { useSetAtom } from "jotai";
 import { UserAtom } from "../atoms/UserAtom";
-import axios from "axios";
+import { updateUser } from "../api/api";
 
 interface User {
     name?: string;
@@ -34,12 +34,7 @@ function UpdateUserDetails({ user, toggle }: UserCardProps) {
             values = Object.fromEntries(
                 Object.entries(values).filter(([_key, value]) => value),
             );
-            console.log(values);
-            const response = await axios.put(
-                `http://localhost:3000/users/${user.id}`,
-                values,
-            );
-            const updated_user = response.data.data;
+            const updated_user = await updateUser(user.id as number, values)
             setUser(updated_user);
             toggle();
         } catch (error) {

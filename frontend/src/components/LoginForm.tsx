@@ -7,12 +7,10 @@ import {
     Flex,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import axios from "axios";
 import { UserAtom } from "../atoms/UserAtom";
 import { useSetAtom } from "jotai";
 import type { User } from "../types";
-
-
+import { getUserByEmailAndPwd } from "../api/api";
 
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
     const setUser = useSetAtom(UserAtom);
@@ -23,21 +21,20 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         },
     });
     async function handleSubmit(values: User) {
-        try {
-            const response = await axios.post<{ data: User }>(
-                "http://localhost:3000/users/login",
-                values,
-            );
-            const user = response.data.data;
-            setUser(user);
-            onSuccess();
-        } catch (error) {
-            console.log(error);
-        }
+        const user = await getUserByEmailAndPwd(values);
+        setUser(user);
+        onSuccess();
     }
+
     return (
         <>
-            <Paper withBorder bd={"lightgray 1px solid"} shadow="md" bg={"#bbddff"} p={"lg"}>
+            <Paper
+                withBorder
+                bd={"lightgray 1px solid"}
+                shadow="md"
+                bg={"#bbddff"}
+                p={"lg"}
+            >
                 <Title order={2} p={10}>
                     Login
                 </Title>

@@ -8,45 +8,32 @@ import {
 } from "@mantine/core";
 
 import { useForm } from "@mantine/form";
-import axios from "axios";
 import type { User } from "../types";
 import { useSetAtom } from "jotai";
 import { UserAtom } from "../atoms/UserAtom";
-
-interface RegisterValues {
-    name: string;
-    email: string;
-    password: string;
-}
+import { createNewUser } from "../api/api";
 
 function Register({ onSuccess }: { onSuccess: () => void }) {
     const setUser = useSetAtom(UserAtom);
-    const form = useForm<RegisterValues>({
+    const form = useForm<User>({
         initialValues: {
             name: "",
             email: "",
             password: "",
         },
     });
-    async function handleRegister(values: RegisterValues) {
-        try {
-            const response = await axios.post(
-                "http://localhost:3000/users",
-                values,
-            );
-            const new_user: User = response.data.data;
+    async function handleRegister(values: User) {
+        const new_user = await createNewUser(values);
+        if (new_user) {
             setUser({
-                id: new_user.id,
-                name: new_user.name,
-                email: new_user.email,
+                id: new_user?.id,
+                name: new_user?.name,
+                email: new_user?.email,
             });
-            if (onSuccess) {
-                onSuccess();
-            }
-        } catch (error) {
-            console.log(error);
+            onSuccess();
         }
     }
+
     return (
         <>
             <Paper

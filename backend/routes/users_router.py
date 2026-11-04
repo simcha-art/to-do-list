@@ -7,7 +7,7 @@ from services.users_service import valid_new_user, valid_update_user
 
 router = Blueprint("users", __name__)
 
-@router.get("")
+@router.post("/login")
 def get_user():
     body = request.get_json(silent=True)
     email = body["email"]

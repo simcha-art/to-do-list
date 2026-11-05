@@ -9,11 +9,13 @@ import {
 import { useForm } from "@mantine/form";
 import { UserAtom } from "../atoms/UserAtom";
 import { useSetAtom } from "jotai";
-import type { User } from "../types";
+import type { User, UserWithMission } from "../types";
 import { getUserByEmailAndPwd } from "../api/api";
+import { missionsAtom } from "../atoms/MissionsAtom";
 
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
     const setUser = useSetAtom(UserAtom);
+    const setMissions = useSetAtom(missionsAtom)
     const form = useForm<User>({
         initialValues: {
             email: "",
@@ -21,8 +23,11 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         },
     });
     async function handleSubmit(values: User) {
-        const user = await getUserByEmailAndPwd(values);
-        setUser(user);
+        const data = await getUserByEmailAndPwd(values);
+        const {id, name, email, missions} = data as UserWithMission
+
+        setMissions(missions)
+        setUser({id, name, email});
         onSuccess();
     }
 

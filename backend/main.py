@@ -4,6 +4,7 @@ from flask_cors import CORS
 from routes.users_router import router as users_router
 from routes.missions_router import router as missions_router
 from dotenv import load_dotenv
+from werkzeug.exceptions import HTTPException
 
 load_dotenv()
 
@@ -26,9 +27,20 @@ def health():
 app.register_blueprint(missions_router, url_prefix="/missions")
 app.register_blueprint(users_router, url_prefix="/users")
 
-@app.errorhandler
+
+@app.errorhandler(HTTPException)
+def handle_http_errors(e: HTTPException):
+    message = e.description
+    code = e.code
+    print(f"{code}: {message}")
+    return jsonify({"error": message}), code
+
+@app.errorhandler(Exception)
 def handler_error(e: Exception):
-    print(str(e))
+    print(e)
     code = e.code | 500
-    return e, code
+    return jsonify({"error": str(e)}), code
+
+
+
 app.run(port=int(os.getenv("PORT", 3000)))

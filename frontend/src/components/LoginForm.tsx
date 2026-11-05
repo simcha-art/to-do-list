@@ -5,17 +5,21 @@ import {
     Button,
     Title,
     Flex,
+    Loader,
+    Alert,
+    Center,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { UserAtom } from "../atoms/UserAtom";
 import { useSetAtom } from "jotai";
 import type { User, UserWithMission } from "../types";
-import { getUserByEmailAndPwd } from "../api/api";
 import { missionsAtom } from "../atoms/MissionsAtom";
+import { useAxios } from "../hooks/useAxios";
 
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
+    const { loading, error, exec } = useAxios<UserWithMission>();
     const setUser = useSetAtom(UserAtom);
-    const setMissions = useSetAtom(missionsAtom)
+    const setMissions = useSetAtom(missionsAtom);
     const form = useForm<User>({
         initialValues: {
             email: "",
@@ -23,12 +27,14 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         },
     });
     async function handleSubmit(values: User) {
-        const data = await getUserByEmailAndPwd(values);
-        const {id, name, email, missions} = data as UserWithMission
+        const data = await exec("/users/login", "POST", values);
+        if (data) {
+            const { id, name, email, missions } = data;
 
-        setMissions(missions)
-        setUser({id, name, email});
-        onSuccess();
+            setMissions(missions);
+            setUser({ id, name, email });
+            onSuccess();
+        }
     }
 
     return (
@@ -55,7 +61,13 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
                             placeholder="Enter your password"
                             {...form.getInputProps("password")}
                         />
-                        <Button type="submit">Send</Button>
+                        <Button type="submit" disabled={loading}>
+                            Send
+                        </Button>
+                        <Center>
+                            {loading && <Loader />}
+                            {error && <Alert color="red">{error}</Alert>}
+                        </Center>
                     </Flex>
                 </form>
             </Paper>

@@ -1,9 +1,10 @@
 import axios from "axios"
-import type { User } from "../types"
+import type { Mission, User, UserWithMission } from "../types"
 
 const apiUsers = axios.create({ baseURL: "http://localhost:3000/users" })
 
-async function getUserByEmailAndPwd(values: User) {
+
+async function getUserByEmailAndPwd(values: User): Promise<UserWithMission | undefined> {
     try {
         const response = await apiUsers.post("/login", values)
         return response.data.data

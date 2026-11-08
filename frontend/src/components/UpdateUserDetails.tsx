@@ -6,12 +6,15 @@ import {
     Divider,
     Flex,
     Button,
+    Loader,
+    Alert,
+    Box,
 } from "@mantine/core";
 import type { UserCardProps } from "./UserDetailsCard";
 import { useForm } from "@mantine/form";
 import { useSetAtom } from "jotai";
 import { UserAtom } from "../atoms/UserAtom";
-import { updateUser } from "../api/api";
+import { useAxios } from "../hooks/useAxios";
 
 interface User {
     name?: string;
@@ -20,6 +23,7 @@ interface User {
 }
 
 function UpdateUserDetails({ user, toggle }: UserCardProps) {
+    const { error, loading, exec } = useAxios<User>();
     const setUser = useSetAtom(UserAtom);
     const { name, email } = user;
     const form = useForm<User>({
@@ -34,9 +38,11 @@ function UpdateUserDetails({ user, toggle }: UserCardProps) {
             values = Object.fromEntries(
                 Object.entries(values).filter(([_key, value]) => value),
             );
-            const updated_user = await updateUser(user.id as number, values)
-            setUser(updated_user);
-            toggle();
+            const updatedUser = await exec(`/users/${user.id}`, "PUT", values);
+            if (updatedUser) {
+                setUser(updatedUser);
+                toggle();
+            }
         } catch (error) {
             console.log(error);
         }
@@ -122,6 +128,12 @@ function UpdateUserDetails({ user, toggle }: UserCardProps) {
                             Cancel
                         </Button>
                     </Flex>
+                    <Box mt={10}>
+
+                        {loading && <Loader />}
+                        {error && <Alert color="red">{error}</Alert>}
+                    </Box>
+                        
                 </form>
             </Card>
         </Center>

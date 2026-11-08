@@ -5,15 +5,19 @@ import {
     Title,
     Paper,
     Stack,
+    Loader,
+    Alert,
+    Center,
 } from "@mantine/core";
 
 import { useForm } from "@mantine/form";
 import type { User } from "../types";
 import { useSetAtom } from "jotai";
 import { UserAtom } from "../atoms/UserAtom";
-import { createNewUser } from "../api/api";
+import { useAxios } from "../hooks/useAxios";
 
 function Register({ onSuccess }: { onSuccess: () => void }) {
+    const { loading, error, exec } = useAxios<User>();
     const setUser = useSetAtom(UserAtom);
     const form = useForm<User>({
         initialValues: {
@@ -23,12 +27,12 @@ function Register({ onSuccess }: { onSuccess: () => void }) {
         },
     });
     async function handleRegister(values: User) {
-        const new_user = await createNewUser(values);
+        const new_user = await exec("/users", "POST", values)
         if (new_user) {
             setUser({
-                id: new_user?.id,
-                name: new_user?.name,
-                email: new_user?.email,
+                id: new_user.id,
+                name: new_user.name,
+                email: new_user.email,
             });
             onSuccess();
         }
@@ -63,9 +67,11 @@ function Register({ onSuccess }: { onSuccess: () => void }) {
                             placeholder="Enter your password"
                             {...form.getInputProps("password")}
                         />
-                        <Button fullWidth type="submit">
+                        <Button fullWidth type="submit" disabled={loading}>
                             Register
                         </Button>
+                        {loading && <Center><Loader /></Center>}
+                        {error && <Alert color="red">{error}</Alert>}
                     </Stack>
                 </form>
             </Paper>

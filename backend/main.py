@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError, DataError
+from pydantic import ValidationError
 import os
 from flask_cors import CORS
 from routes.users_router import router as users_router
@@ -35,10 +37,28 @@ def handle_http_errors(e: HTTPException):
     print(f"{code}: {message}")
     return jsonify({"error": message}), code
 
+
+@app.errorhandler(IntegrityError)
+def handle_sql_duplicate_error(err: IntegrityError):
+    print(err)
+    if err.orig.pgcode == "23505":
+        return jsonify({"error": "Duplicate error: this email is aleady in the system"}), 409
+    return jsonify({"error": "error"}), 409
+
+@app.errorhandler(DataError)
+def handle_sql_data_error(err: DataError):
+    print(err)
+    return jsonify({"error": "Invalid data"}), 400
+
+@app.errorhandler(ValidationError)
+def handle_pydantic_errors(err: ValidationError):
+    print(err.errors())
+    return jsonify({"error": "invalid data"}), 400
+
 @app.errorhandler(Exception)
 def handler_error(e: Exception):
     print(e)
-    code = e.code | 500
+    code = e.code if hasattr(e, "code") else 500
     return jsonify({"error": str(e)}), code
 
 

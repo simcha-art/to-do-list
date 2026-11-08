@@ -13,8 +13,8 @@ import {
 import type { UserCardProps } from "./UserDetailsCard";
 import { useForm } from "@mantine/form";
 import { useSetAtom } from "jotai";
-import { UserAtom } from "../atoms/UserAtom";
-import { useAxios } from "../hooks/useAxios";
+import { UserAtom } from "../../atoms/UserAtom";
+import { useAxios } from "../../hooks/useAxios";
 
 interface User {
     name?: string;

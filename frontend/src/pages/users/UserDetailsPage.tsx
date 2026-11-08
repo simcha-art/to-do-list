@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
-import { UserAtom } from "../atoms/UserAtom";
-import UserDetailsCard from "../components/UserDetailsCard";
-import UpdateUserDetails from "../components/UpdateUserDetails";
+import { UserAtom } from "../../atoms/UserAtom";
+import UserDetailsCard from "../../components/users/UserDetailsCard";
+import UpdateUserDetails from "../../components/users/UpdateUserDetails";
 import { useState } from "react";
 
 function UserDetailsPage() {

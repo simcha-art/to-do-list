@@ -10,11 +10,11 @@ import {
     Center,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { UserAtom } from "../atoms/UserAtom";
+import { UserAtom } from "../../atoms/UserAtom";
 import { useSetAtom } from "jotai";
-import type { User, UserWithMission } from "../types";
-import { missionsAtom } from "../atoms/MissionsAtom";
-import { useAxios } from "../hooks/useAxios";
+import type { User, UserWithMission } from "../../types";
+import { missionsAtom } from "../../atoms/MissionsAtom";
+import { useAxios } from "../../hooks/useAxios";
 
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
     const { loading, error, exec } = useAxios<UserWithMission>();

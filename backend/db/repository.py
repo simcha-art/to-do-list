@@ -7,7 +7,7 @@ import bcrypt
 
 class BaseRepository:
 
-    def __init__(self, session: Session, cls: User | Mission):
+    def __init__(self, session: Session, cls: type[User] | type[Mission]):
         self.session = session
         self.cls = cls
 
@@ -29,6 +29,12 @@ class BaseRepository:
     def get_by_id(self, id):
         return self.session.get(self.cls, id)
 
+    def get(self, **filters):
+        query = select(self.cls)
+        for key, val in filters.items():
+            query = query.where(getattr(self.cls, key) == val)
+        return self.session.scalars(query).all()
+
 class UserRepository(BaseRepository):
     def __init__(self, session):
         super().__init__(session, User)
@@ -38,7 +44,7 @@ class UserRepository(BaseRepository):
         return super().create(data)
 
     def update(self, obj, data):
-        if hasattr(data, "password"):
+        if "password" in data:
             data["password"] = bcrypt.hashpw(data["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
         return super().update(obj, data)
 
@@ -56,5 +62,6 @@ class UserRepository(BaseRepository):
 class MissionRepository(BaseRepository):
     def __init__(self, session):
         super().__init__(session, Mission)
+
 
 

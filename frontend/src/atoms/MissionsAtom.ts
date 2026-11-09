@@ -3,8 +3,8 @@ import type { Mission } from "../types";
 
 export const missionsAtom = atom<Mission[]>([])
 
-export const openMissions = atom<Mission[]>((get) => get(missionsAtom).filter(m => !m.finished))
-export const closedMissions = atom<Mission[]>((get) => get(missionsAtom).filter(m => m.finished))
+export const openMissions = atom<Mission[]>((get) => get(missionsAtom).filter(m => !m.is_finished))
+export const closedMissions = atom<Mission[]>((get) => get(missionsAtom).filter(m => m.is_finished))
 
 export function addMission(new_mission: Mission) {
     const [missions, setMissions] = useAtom(missionsAtom)

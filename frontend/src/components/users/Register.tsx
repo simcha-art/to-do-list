@@ -11,10 +11,10 @@ import {
 } from "@mantine/core";
 
 import { useForm } from "@mantine/form";
-import type { User } from "../types";
+import type { User } from "../../types";
 import { useSetAtom } from "jotai";
-import { UserAtom } from "../atoms/UserAtom";
-import { useAxios } from "../hooks/useAxios";
+import { UserAtom } from "../../atoms/UserAtom";
+import { useAxios } from "../../hooks/useAxios";
 
 function Register({ onSuccess }: { onSuccess: () => void }) {
     const { loading, error, exec } = useAxios<User>();

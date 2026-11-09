@@ -7,7 +7,7 @@ function LoginPage() {
   return (
     <Center h={"100vh"}>
 
-      <LoginForm onSuccess={() => navigate("/user-details")}/>
+      <LoginForm onSuccess={() => navigate("/missions-list")}/>
     </Center>
   )
 }

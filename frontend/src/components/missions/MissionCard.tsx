@@ -2,7 +2,7 @@ import { Badge, Button, Card, Flex, Stack, Title } from "@mantine/core";
 import type { Mission } from "../../types";
 import { useNavigate } from "react-router-dom";
 
-interface PropCard {
+export interface PropCard {
     mission: Mission;
 }
 
@@ -27,10 +27,10 @@ function MissionCard({ mission }: PropCard) {
                 >
                     <Badge radius={"md"}>{shortDate}</Badge>
                     <Badge
-                        bg={mission.is_finished ? "red" : "green"}
-                        radius={"md"}
+                        bg={mission.is_finished ? "green" : "gray"}
+                        radius={"md"}   
                     >
-                        {mission.is_finished ? "done" : "pending"}
+                        {mission.is_finished ? "finished" : "active"}
                     </Badge>
                 </Flex>
                     <Title order={2} fw={700} size={"1.8rem"}>{mission.title}</Title>

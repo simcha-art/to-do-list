@@ -9,7 +9,7 @@ export interface Mission {
     id: number,
     title: string,
     desc: string,
-    date: string,
+    date: Date | string,
     is_finished: boolean,
     created_at: string,
     user_id: number

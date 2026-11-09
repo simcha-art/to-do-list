@@ -14,6 +14,14 @@ def get_missions_with_filters():
 
     return jsonify({"success": True, "data": missions}), 200
 
+@router.get("/<string:id>")
+def get_mission_by_id(id):
+    with session() as current_session:
+        mission = MissionRepository(current_session).get_by_id(id).to_dict()
+        if not mission:
+            abort(404, f"mission {id} not found")
+    return jsonify({"success": True, "data": mission})
+
 
 @router.post("")
 def create_mission():

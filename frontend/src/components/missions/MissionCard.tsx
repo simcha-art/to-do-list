@@ -16,7 +16,7 @@ function MissionCard({ mission }: PropCard) {
             p={10}
             withBorder
             bd={"2px solid gray"}
-            w={"40vw"}
+            w={"30vw"}
         >
                 <Stack gap={"lg"}>
                 <Flex
@@ -33,7 +33,7 @@ function MissionCard({ mission }: PropCard) {
                         {mission.is_finished ? "done" : "pending"}
                     </Badge>
                 </Flex>
-                    <Title order={2} fw={700} size={"3rem"}>{mission.title}</Title>
+                    <Title order={2} fw={700} size={"1.8rem"}>{mission.title}</Title>
                     <Button
                         bg={"orange"}
                         onClick={() =>

@@ -10,7 +10,7 @@ export interface Mission {
     title: string,
     desc: string,
     date: string,
-    finished: boolean,
+    is_finished: boolean,
     created_at: string,
     user_id: number
 }

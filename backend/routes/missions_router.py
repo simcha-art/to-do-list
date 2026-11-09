@@ -39,11 +39,13 @@ def update_mission_details(id):
     with session() as current_session:
         repo = MissionRepository(current_session)
         origin_mission = repo.get_by_id(id)
+        print({"origin": origin_mission})
         updated_mission = repo.update(origin_mission, body)
+        print({"updated": updated_mission})
         if not updated_mission:
             abort(404,  f"mission {id} not found")
         updated_mission = updated_mission.to_dict()
 
-    return jsonify({"success": True, "date": updated_mission}), 200
+    return jsonify({"success": True, "data": updated_mission}), 200
 
     

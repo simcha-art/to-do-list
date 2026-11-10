@@ -7,7 +7,6 @@ import { useState } from "react";
 function UserDetailsPage() {
     const [isEdit, setIsEdit] = useState<boolean>(false)
     const user = useAtomValue(UserAtom);
-    console.log(user)
     function toggle(){
         setIsEdit(prev => !prev)
     }

@@ -27,13 +27,16 @@ function Register({ onSuccess }: { onSuccess: () => void }) {
         },
     });
     async function handleRegister(values: User) {
-        const new_user = await exec("/users", "POST", values)
-        if (new_user) {
-            setUser({
-                id: new_user.id,
-                name: new_user.name,
-                email: new_user.email,
-            });
+        const data = await exec("/users", "POST", values)
+        if (data) {
+            const new_user = {
+            id: data.id,
+            name: data.name,
+            email: data.email
+        }
+
+            setUser(new_user);
+            localStorage.setItem("user", JSON.stringify(new_user))
             onSuccess();
         }
     }
@@ -47,6 +50,7 @@ function Register({ onSuccess }: { onSuccess: () => void }) {
                 w={400}
                 mt={20}
                 withBorder
+                bg={"#bbddff"}
             >
                 <Title order={2}>Register</Title>
                 <form onSubmit={form.onSubmit(handleRegister)}>

@@ -15,8 +15,10 @@ import { useSetAtom } from "jotai";
 import type { User, UserWithMission } from "../../types";
 import { missionsAtom } from "../../atoms/MissionsAtom";
 import { useAxios } from "../../hooks/useAxios";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
+    const navigate = useNavigate();
     const { loading, error, exec } = useAxios<UserWithMission>();
     const setUser = useSetAtom(UserAtom);
     const setMissions = useSetAtom(missionsAtom);
@@ -33,6 +35,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 
             setMissions(missions);
             setUser({ id, name, email });
+            localStorage.setItem("user", JSON.stringify({ id, name, email }));
             onSuccess();
         }
     }
@@ -63,6 +66,9 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
                         />
                         <Button type="submit" disabled={loading}>
                             Send
+                        </Button>
+                        <Button onClick={() => navigate("/register")}>
+                            Move to registration
                         </Button>
                         <Center>
                             {loading && <Loader />}

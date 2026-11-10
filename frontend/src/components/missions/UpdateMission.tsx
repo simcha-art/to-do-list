@@ -29,7 +29,7 @@ function UpdateMission({mission}: PropCard) {
     <Stack gap={"md"}>
 
     <TextInput label="Title" {...form.getInputProps('title')}/>
-    <Textarea label="Description" rows={5} {...form.getInputProps('desc')}/>
+    <Textarea label="Description" rows={4} {...form.getInputProps('desc')}/>
     <TextInput label="Date" {...form.getInputProps('date')}/>
     <Button type="submit">send</Button>
     {loading ? <Loader /> :  

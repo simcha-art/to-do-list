@@ -5,7 +5,7 @@ import { Center } from '@mantine/core'
 function LoginPage() {
   const navigate = useNavigate()
   return (
-    <Center h={"100vh"}>
+    <Center h={"80vh"}>
 
       <LoginForm onSuccess={() => navigate("/missions-list")}/>
     </Center>

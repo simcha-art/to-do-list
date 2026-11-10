@@ -33,11 +33,11 @@ function DetailedMission({ mission: initialMission }: PropCard) {
         <>
             {mission ? (
                 <Card w={600} withBorder bd={"2px solid gray"}>
-                    <Card.Section bg={"#dd33dd"} p={10}>
+                    <Card.Section bg={"#118AB2"} p={10}>
                         <Title order={1}>{mission.title}</Title>
                     </Card.Section>
                     <Card.Section
-                        bg={mission.is_finished ? "green" : "#ddb500"}
+                        bg={mission.is_finished ? "#7CD5C7" : "#F2F2ED"}
                         p={10}
                         flex={1}
                     >
@@ -55,7 +55,7 @@ function DetailedMission({ mission: initialMission }: PropCard) {
                                 </Center>
                             </Box>
 
-                            <Divider orientation="vertical" />
+                            <Divider orientation="vertical"/>
 
                             <Box
                                 flex={1}
@@ -84,16 +84,17 @@ function DetailedMission({ mission: initialMission }: PropCard) {
                         </Flex>
 
                         <Flex
-                            bg={mission.is_finished ? "green" : "#ddb500"}
+                            bg={mission.is_finished ? "#7CD5C7" : "#F2F2ED"}
                             p={10}
                             gap={30}
                         >
                             <Button
                             flex={1}
                                 color={
-                                    mission.is_finished ? "#ddb500" : "green"
+                                    mission.is_finished ? "#F2F2ED" : "#7CD5C7"
                                 }
                                 onClick={toggleFinished}
+                                c={mission.is_finished ? "#118AB2": "white"}
                             >
                                 {mission.is_finished
                                     ? "Change to Active"
@@ -101,7 +102,7 @@ function DetailedMission({ mission: initialMission }: PropCard) {
                             </Button>
                             <Button
                             flex={1}
-                                color="#dd33dd"
+                                color="#118AB2"
                                 onClick={() => navigate(`/update-mission/${mission.id}`)}
                             >
                                 update mission details

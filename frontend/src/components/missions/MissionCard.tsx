@@ -11,7 +11,7 @@ function MissionCard({ mission }: PropCard) {
     const shortDate = new Date(mission.date).toLocaleDateString("he-IL")
     return (
         <Card
-            bg={"cyan"}
+            bg={"#ccddff"}
             radius={"md"}
             p={10}
             withBorder
@@ -22,7 +22,7 @@ function MissionCard({ mission }: PropCard) {
                 <Flex
                     justify={"space-between"}
                     align={"center"}
-                    bg={"cyan"}
+                    bg={"#ccddff"}
                     gap={"lg"}
                 >
                     <Badge radius={"md"}>{shortDate}</Badge>

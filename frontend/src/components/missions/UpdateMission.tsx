@@ -22,7 +22,7 @@ function UpdateMission({mission}: PropCard) {
   }
   return (
     <>
-    <Card withBorder bg={"#dddddd"} bd={"1px solid gray"} p={"lg"} shadow="md">
+    <Card withBorder bg={"#ccddff"} bd={"1px solid gray"} p={"lg"} shadow="md">
 
     <Title p={"lg"}> Update Mission Details</Title>
     <form onSubmit={form.onSubmit(handleSubmit)}>

@@ -8,7 +8,7 @@ export interface UserCardProps {
 function UserDetailsCard({user, toggle} : UserCardProps) {
     
         return (
-            <Center mih="100vh" bg="#f1f5f9" p="md">
+            <Center mih="100vh">
                 <Card
                     withBorder
                     radius="lg"

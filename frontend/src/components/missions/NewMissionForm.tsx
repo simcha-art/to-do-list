@@ -1,19 +1,11 @@
 import {
-    Alert,
-    Button,
     Card,
     Center,
-    Loader,
-    Stack,
-    Textarea,
-    TextInput,
     Title,
 } from "@mantine/core";
 import { useAxios } from "../../hooks/useAxios";
-import { MaskedDateInput } from "@mantine/dates";
 import { useAtomValue } from "jotai";
 import { UserAtom } from "../../atoms/UserAtom";
-import { useForm } from "@mantine/form";
 import GenericForm, { type GenericFormProps } from "../GenericForm";
 
 interface valuesProp {
@@ -25,7 +17,7 @@ interface valuesProp {
 }
 
 function NewMissionForm() {
-    const { loading, error, data, exec } = useAxios();
+    const { loading, error, exec } = useAxios();
     const feilds: GenericFormProps["feilds"] = [
         {
             feildName: "title",
@@ -50,13 +42,6 @@ function NewMissionForm() {
         },
     ];
     const user_id = useAtomValue(UserAtom).id;
-    const form = useForm({
-        initialValues: {
-            title: "",
-            desc: "",
-            date: "",
-        },
-    });
     function handleSubmit(values: valuesProp) {
         values.user_id = user_id;
         values.is_finished = false;

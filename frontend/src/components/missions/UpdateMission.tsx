@@ -1,46 +1,70 @@
-import { Alert, Button, Card, Loader, Stack, Textarea, TextInput, Title } from "@mantine/core"
-import type {PropCard} from "./MissionCard"
-import { useForm } from "@mantine/form"
-import type { Mission } from "../../types"
-import { useAxios } from "../../hooks/useAxios"
-import { useParams } from "react-router-dom"
+import {
+    Card,
+    Title,
+} from "@mantine/core";
+import type { PropCard } from "./MissionCard";
+import type { Mission } from "../../types";
+import { useAxios } from "../../hooks/useAxios";
+import { useParams } from "react-router-dom";
+import type { GenericFormProps } from "../GenericForm";
+import GenericForm from "../GenericForm";
 
-function UpdateMission({mission}: PropCard) {
-  const {loading, error, data: success, exec} = useAxios<Mission>()
-  const {id} = useParams()
-  const form = useForm({
-    initialValues: {
-      title: mission.title,
-      desc: mission.desc,
-      date: new Date(mission.date).toISOString().split("T")[0].split("-").reverse().join("-")
+function UpdateMission({ mission }: PropCard) {
+    const { loading, error, exec } = useAxios<Mission>();
+    const feilds: GenericFormProps["feilds"] = [
+        {
+            feildName: "title",
+            label: "Title",
+            initialValue: mission.title,
+            type: "text",
+        },
+        {
+            feildName: "desc",
+            label: "Description",
+            initialValue: mission.desc,
+            type: "textarea",
+        },
+        {
+            feildName: "date",
+            label: "To be completed by",
+            initialValue: new Date(mission.date)
+                .toISOString()
+                .split("T")[0]
+                .split("-")
+                .reverse()
+                .join("-"),
+            type: "text",
+        },
+    ];
+    const { id } = useParams();
+    function handleSubmit(values: Pick<Mission, "title" | "desc" | "date">) {
+        const body = {
+            ...values,
+            date: values.date.toString().split("-").reverse().join("-"),
+        };
+        exec(`/missions/${id}`, "PUT", body);
     }
-  })
-  function handleSubmit(values: Pick<Mission, "title" | "desc" | "date">) {
-    const body = {...values, date: values.date.toString().split("-").reverse().join("-")}
-    exec(`/missions/${id}`, "PUT", body)
-
-  }
-  return (
-    <>
-    <Card withBorder bg={"#ccddff"} bd={"1px solid gray"} p={"lg"} shadow="md">
-
-    <Title p={"lg"}> Update Mission Details</Title>
-    <form onSubmit={form.onSubmit(handleSubmit)}>
-    <Stack gap={"md"}>
-
-    <TextInput label="Title" {...form.getInputProps('title')}/>
-    <Textarea label="Description" rows={4} {...form.getInputProps('desc')}/>
-    <TextInput label="Date" {...form.getInputProps('date')}/>
-    <Button type="submit">send</Button>
-    {loading ? <Loader /> :  
-    error ? <Alert color="red">{error}</Alert>:
-    success && <Alert color="green">The mission updated successfully</Alert>}
-    </Stack>
-    </form>
-
-    </Card>
-    </>
-  )
+    return (
+        <>
+            <Card
+                withBorder
+                bg={"#ccddff"}
+                bd={"1px solid gray"}
+                p={"lg"}
+                shadow="md"
+            >
+                <Title p={"lg"}> Update Mission Details</Title>
+                <GenericForm
+                    feilds={feilds}
+                    error={error}
+                    loading={loading}
+                    buttonTitle="Send"
+                    onSubmit={handleSubmit}
+                    successMessage="The mission created successfully"
+                />
+            </Card>
+        </>
+    );
 }
 
-export default UpdateMission
+export default UpdateMission;

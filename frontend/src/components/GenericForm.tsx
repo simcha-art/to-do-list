@@ -1,4 +1,4 @@
-import { Alert, Button, Center, Flex, Loader, NumberInput, PasswordInput, TextInput } from "@mantine/core";
+import { Alert, Button, Center, Flex, Loader, NumberInput, PasswordInput, Textarea, TextInput } from "@mantine/core";
 import { MaskedDateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
@@ -8,7 +8,7 @@ interface Feild {
     label: string;
     placeHolder?: string;
     initialValue: any;
-    type: "text" | "password" | "number" | "date"
+    type: "text" | "password" | "number" | "date" | "textarea"
 }
 
 export interface GenericFormProps {
@@ -49,6 +49,8 @@ function GenericForm({ feilds, buttonTitle, onSubmit, loading, error, successMes
                     return <NumberInput label={f.label} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "date") {
                     return <MaskedDateInput clearable withDropdown={false} label={f.label} {...form.getInputProps(f.feildName)}/>
+                } else if (f.type === "textarea") {
+                    return <Textarea label={f.label} placeholder={f.placeHolder} rows={4} {...form.getInputProps(f.feildName)}/>
                 }
             })}
             <Center>

@@ -22,7 +22,6 @@ export interface GenericFormProps {
 
 
 function GenericForm({ feilds, buttonTitle, onSubmit, loading, error, successMessage }: GenericFormProps) {
-    console.log("render GenericForm")
     const [successMsg, setSuccessMsg] = useState("")
     const initialValues: {[key: string]: any} = {}
     feilds.forEach(f => {

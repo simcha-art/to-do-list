@@ -9,7 +9,6 @@ interface GenericFormCardProps {
 
 
 function GenericFormCard({title, form, addButton}: GenericFormCardProps) {
-    console.log("render GenericFormCard")
   return (
     <Center h={"88vh"}>
 

@@ -9,7 +9,6 @@ import GenericForm, { type GenericFormProps } from "../GenericForm";
 import GenericFormCard from "../GenericFormCard";
 
 function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
-    console.log("render LoginForm_V2")
     const feilds: GenericFormProps["feilds"] = [
         {
             feildName: "email",

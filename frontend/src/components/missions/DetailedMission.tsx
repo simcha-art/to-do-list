@@ -22,7 +22,6 @@ function DetailedMission({ mission: initialMission }: PropCard) {
     const navigate = useNavigate()
     const mission = data || initialMission;
     function toggleFinished() {
-        console.log("toggling");
         exec(`/missions/${mission.id}`, "PUT", {
             is_finished: !mission.is_finished,
         });

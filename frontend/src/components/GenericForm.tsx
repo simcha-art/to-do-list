@@ -32,8 +32,8 @@ function GenericForm({ feilds, buttonTitle, onSubmit, loading, error, successMes
         initialValues: initialValues,
     })
     return (
-        <form onSubmit={form.onSubmit((values) => {
-            onSubmit(values)
+        <form onSubmit={form.onSubmit(async (values) => {
+            await onSubmit(values)
             if (successMessage) {
                 setSuccessMsg(successMessage)
             }
@@ -41,19 +41,20 @@ function GenericForm({ feilds, buttonTitle, onSubmit, loading, error, successMes
             <Flex direction={"column"} gap={"lg"} justify={"center"}>
 
             {feilds.map(f => {
-                if (f.type === "text") {
-                    return <TextInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
-                } else if (f.type === "email") {
-                    return <TextInput label={f.label} type="email" key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
-                } else if (f.type === "password") {
-                    return <PasswordInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
-                } else if (f.type === "number") {
-                    return <NumberInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
-                } else if (f.type === "date") {
-                    return <MaskedDateInput clearable key={f.feildName} withDropdown={false} label={f.label} {...form.getInputProps(f.feildName)}/>
-                } else if (f.type === "textarea") {
-                    return <Textarea label={f.label} key={f.feildName} placeholder={f.placeHolder} rows={4} {...form.getInputProps(f.feildName)}/>
-                }
+                switch (f.type){
+                    case "text":
+                        return <TextInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    case "email":
+                        return <TextInput label={f.label} type="email" key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    case "password":
+                        return <PasswordInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    case "number":
+                        return <NumberInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    case "date":
+                        return <MaskedDateInput clearable key={f.feildName} withDropdown={false} label={f.label} {...form.getInputProps(f.feildName)}/>
+                    case "textarea":
+                        return <Textarea label={f.label} key={f.feildName} placeholder={f.placeHolder} rows={4} {...form.getInputProps(f.feildName)}/>
+                    }
             })}
             <Center>
             {

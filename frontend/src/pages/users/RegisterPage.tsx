@@ -1,16 +1,16 @@
 import { Center } from '@mantine/core'
-import Register from '../components/Register'
 import { useNavigate } from 'react-router-dom'
+import Register_v2 from '../../components/users/Register_v2'
 
 function RegisterPage() {
   const navigate = useNavigate()
   function onSuccess() {
-    navigate(`/user-details`)
+    navigate(`/missions-list`)
   }
   return (
     <>
-    <Center>
-      <Register onSuccess={onSuccess}/>
+    <Center h={"80vh"}>
+      <Register_v2 onSuccess={onSuccess}/>
     </Center>
     </>
   )

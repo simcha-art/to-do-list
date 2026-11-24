@@ -1,5 +1,5 @@
 import { Center, Card, Title, Text, Divider, Flex, Button } from "@mantine/core";
-import type { User } from "../types";
+import type { User } from "../../types";
 export interface UserCardProps {
     user: User,
     toggle: () => void
@@ -8,7 +8,7 @@ export interface UserCardProps {
 function UserDetailsCard({user, toggle} : UserCardProps) {
     
         return (
-            <Center mih="100vh" bg="#f1f5f9" p="md">
+            <Center mih="100vh">
                 <Card
                     withBorder
                     radius="lg"

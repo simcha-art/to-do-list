@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { api } from "../api/api";
-import type { User } from "../types";
+import type { Mission, User } from "../types";
 import axios from "axios";
 
 export type Method = "POST" | "PUT" | "DELETE" | "GET"
@@ -11,7 +11,7 @@ export function useAxios<T>() {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [data, setData] = useState<T>()
-    async function exec(url: string, method: Method, body: User): Promise<T | undefined> {
+    async function exec(url: string, method: Method, body: Partial<User> | Partial<Mission>): Promise<T | undefined> {
         try {
             setLoading(true);
             setError("");

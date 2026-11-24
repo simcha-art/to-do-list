@@ -7,7 +7,7 @@ import bcrypt
 
 class BaseRepository:
 
-    def __init__(self, session: Session, cls: User | Mission):
+    def __init__(self, session: Session, cls: type[User] | type[Mission]):
         self.session = session
         self.cls = cls
 
@@ -29,32 +29,24 @@ class BaseRepository:
     def get_by_id(self, id):
         return self.session.get(self.cls, id)
 
+    def get(self, **filters):
+        query = select(self.cls)
+        for key, val in filters.items():
+            query = query.where(getattr(self.cls, key) == val)
+        return self.session.scalars(query).all()
+
 class UserRepository(BaseRepository):
     def __init__(self, session):
         super().__init__(session, User)
 
-    def create(self, data) -> User:
-        data["password"] = bcrypt.hashpw(data["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
-        return super().create(data)
 
-    def update(self, obj, data):
-        if hasattr(data, "password"):
-            data["password"] = bcrypt.hashpw(data["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
-        return super().update(obj, data)
-
-    def get_by_email_and_password(self, email, password:str):
+    def get_by_email(self, email):
         query = select(User).where(User.email == email)
-        user = self.session.scalars(query).first()
-        if not user:
-            return None
-
-        is_correct_pwd = bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8"))
-        if is_correct_pwd:
-            return user
-        return None
+        return self.session.scalars(query).first()
 
 class MissionRepository(BaseRepository):
     def __init__(self, session):
         super().__init__(session, Mission)
+
 
 

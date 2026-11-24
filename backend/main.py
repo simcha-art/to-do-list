@@ -43,7 +43,7 @@ def handle_sql_duplicate_error(err: IntegrityError):
     print(err)
     if err.orig.pgcode == "23505":
         return jsonify({"error": "Duplicate error: this email is aleady in the system"}), 409
-    return jsonify({"error": "error"}), 409
+    return jsonify({"error": f"there is no user with this user_id"}), 409
 
 @app.errorhandler(DataError)
 def handle_sql_data_error(err: DataError):

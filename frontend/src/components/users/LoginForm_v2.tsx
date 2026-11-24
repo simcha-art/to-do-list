@@ -1,4 +1,4 @@
-import { Paper, Button, Title, Flex } from "@mantine/core";
+import {  Button} from "@mantine/core";
 import { UserAtom } from "../../atoms/UserAtom";
 import { useSetAtom } from "jotai";
 import type { User, UserWithMission } from "../../types";

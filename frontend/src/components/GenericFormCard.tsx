@@ -1,4 +1,4 @@
-import { Flex, Paper, Title } from '@mantine/core'
+import { Center, Flex, Paper, Title } from '@mantine/core'
 import type { ReactNode } from 'react';
 
 interface GenericFormCardProps {
@@ -11,6 +11,8 @@ interface GenericFormCardProps {
 function GenericFormCard({title, form, addButton}: GenericFormCardProps) {
     console.log("render GenericFormCard")
   return (
+    <Center h={"88vh"}>
+
             <Paper
                 shadow="md"
                 p={"lg"}
@@ -19,7 +21,7 @@ function GenericFormCard({title, form, addButton}: GenericFormCardProps) {
                 mt={20}
                 withBorder
                 bg={"#bbddff"}
-            >
+                >
                 <Flex direction={"column"} gap={"lg"} justify={"center"}>
                     <Title order={2} p={10}>
                         {title}
@@ -28,6 +30,7 @@ function GenericFormCard({title, form, addButton}: GenericFormCardProps) {
                     {addButton}
                 </Flex>
             </Paper>
+    </Center>
     );
 }
 

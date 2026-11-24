@@ -1,5 +1,4 @@
 import {
-    Center,
     Button,
 } from "@mantine/core";
 import type { UserCardProps } from "./UserDetailsCard";
@@ -70,13 +69,11 @@ function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
     const addButton = <Button onClick={toggle}>Cancel</Button>;
 
     return (
-        <Center mih="100vh">
             <GenericFormCard
                 title="Update user details"
                 form={form}
                 addButton={addButton}
             />
-        </Center>
     );
 }
 

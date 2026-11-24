@@ -26,17 +26,19 @@ function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
         },
     ];
     const navigate = useNavigate();
-    const { loading, error, fetchApi } = useAxios<UserWithMission>();
+    const { loading, error, fetchApi } = useAxios<{user: UserWithMission, token: string}>();
     const setUser = useSetAtom(UserAtom);
     const setMissions = useSetAtom(missionsAtom);
     async function handleSubmit(values: User) {
         const data = await fetchApi("/users/login", "POST", values);
         if (data) {
-            const { id, name, email, missions } = data;
+            const {user, token} = data
+            const { id, name, email, missions } = user;
 
             setMissions(missions);
             setUser({ id, name, email });
             localStorage.setItem("user", JSON.stringify({ id, name, email }));
+            localStorage.setItem("token", token)
             onSuccess();
         }
     }

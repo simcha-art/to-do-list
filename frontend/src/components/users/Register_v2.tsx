@@ -31,19 +31,21 @@ function Register_v2({ onSuccess }: { onSuccess: () => void }) {
             type: "password",
         },
     ];
-    const { loading, error, fetchApi } = useAxios<User>();
+    const { loading, error, fetchApi } = useAxios<{user: User, token: string}>();
     const setUser = useSetAtom(UserAtom);
     async function handleRegister(values: User) {
         const data = await fetchApi("/users", "POST", values);
         if (data) {
+            const {user, token}  = data
             const new_user = {
-                id: data.id,
-                name: data.name,
-                email: data.email,
+                id: user.id,
+                name: user.name,
+                email: user.email,
             };
 
             setUser(new_user);
             localStorage.setItem("user", JSON.stringify(new_user));
+            localStorage.setItem("token", token)
             onSuccess();
         }
     }

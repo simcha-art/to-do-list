@@ -15,7 +15,8 @@ export function useAxios<T>() {
         try {
             setLoading(true);
             setError("");
-            const response = await api({ url, method, data: body })
+            const token = localStorage.getItem("token") || "bla"
+            const response = await api({ url, method, data: body, headers: {"Authorization": `Bearer ${token}`} })
             setData(response.data.data)
             return response.data.data
         } catch (error) {
@@ -25,7 +26,7 @@ export function useAxios<T>() {
                 if (error.response) {
                     message = error.response.data.error
                 } else if (error.request) {
-                    message = "network error, check your network";
+                    message = "Connection error, could not fetch data";
                 }
             } else {
                 message = "Intenal server error";

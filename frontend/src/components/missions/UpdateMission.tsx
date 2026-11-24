@@ -51,7 +51,7 @@ function UpdateMission({ mission }: PropCard) {
                     loading={loading}
                     buttonTitle="Send"
                     onSubmit={handleSubmit}
-                    successMessage="The mission created successfully"
+                    successMessage="The mission updated successfully"
                 />
             }
         />

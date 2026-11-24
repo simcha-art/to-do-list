@@ -13,14 +13,13 @@ load_dotenv()
 app = Flask(__name__)
 CORS(
     app,
-    origins=["http://localhost:3000", "http://localhost:5173"],
+    resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:5173"]}},
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"]
 )
 
-@app.before_request
-def logger():
-    print(f"{request.method}/{request.url}")
-    print(f"query: {request.args.__dict__}, body: {request.get_json(silent=True)}")
+
 
 @app.route("/health")
 def health():
@@ -28,6 +27,11 @@ def health():
 
 app.register_blueprint(missions_router, url_prefix="/missions")
 app.register_blueprint(users_router, url_prefix="/users")
+
+@app.before_request
+def logger():
+    print(f"{request.method}/{request.url}")
+    print(f"query: {request.args.__dict__}, body: {request.get_json(silent=True)} headers_auth: {request.headers.get("Authorization")}")
 
 
 @app.errorhandler(HTTPException)

@@ -7,9 +7,9 @@ import { useEffect } from "react";
 
 function UpdateMissionPage() {
     const { id } = useParams();
-    const { loading, error, data: mission, exec } = useAxios<Mission>();
+    const { loading, error, data: mission, fetchApi } = useAxios<Mission>();
     useEffect(() => {
-        exec(`/missions/${id}`, "GET", {});
+        fetchApi(`/missions/${id}`, "GET", {});
     }, []);
     return (
         <>

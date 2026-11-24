@@ -18,11 +18,11 @@ import type { PropCard } from "./MissionCard";
 import { useNavigate } from "react-router-dom";
 
 function DetailedMission({ mission: initialMission }: PropCard) {
-    const { loading, error, data, exec } = useAxios<Mission>();
+    const { loading, error, data, fetchApi } = useAxios<Mission>();
     const navigate = useNavigate()
     const mission = data || initialMission;
     function toggleFinished() {
-        exec(`/missions/${mission.id}`, "PUT", {
+        fetchApi(`/missions/${mission.id}`, "PUT", {
             is_finished: !mission.is_finished,
         });
         mission.is_finished = !mission.is_finished;

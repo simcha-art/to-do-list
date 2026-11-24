@@ -31,10 +31,10 @@ function Register_v2({ onSuccess }: { onSuccess: () => void }) {
             type: "password",
         },
     ];
-    const { loading, error, exec } = useAxios<User>();
+    const { loading, error, fetchApi } = useAxios<User>();
     const setUser = useSetAtom(UserAtom);
     async function handleRegister(values: User) {
-        const data = await exec("/users", "POST", values);
+        const data = await fetchApi("/users", "POST", values);
         if (data) {
             const new_user = {
                 id: data.id,

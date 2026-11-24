@@ -8,7 +8,7 @@ import type { Mission } from "../../types";
 
 function MissionsList() {
     const [missionsList, setMissions] = useAtom(missionsAtom);
-    const { loading, error, data, exec } = useAxios<Mission[]>();
+    const { loading, error, data, fetchApi } = useAxios<Mission[]>();
     if (data) {
         setMissions(data);
     }
@@ -16,7 +16,7 @@ function MissionsList() {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user") || "{}");
         const id = user.id ? user.id : -1;
-        exec(`/missions?user_id=${id}`, "GET", {});
+        fetchApi(`/missions?user_id=${id}`, "GET", {});
     }, []);
     return (
         <>

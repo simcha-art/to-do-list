@@ -13,7 +13,7 @@ interface valuesProp {
 }
 
 function NewMissionForm() {
-    const { loading, error, exec } = useAxios();
+    const { loading, error, fetchApi } = useAxios();
     const feilds: GenericFormProps["feilds"] = [
         {
             feildName: "title",
@@ -41,7 +41,7 @@ function NewMissionForm() {
     function handleSubmit(values: valuesProp) {
         values.user_id = user_id;
         values.is_finished = false;
-        exec("/missions", "POST", values);
+        fetchApi("/missions", "POST", values);
     }
     return (
         <>

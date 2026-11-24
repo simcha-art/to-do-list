@@ -16,7 +16,7 @@ interface User {
 }
 
 function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
-    const { error, loading, exec } = useAxios<User>();
+    const { error, loading, fetchApi } = useAxios<User>();
     const setUser = useSetAtom(UserAtom);
     const { name, email } = user;
     const feilds: GenericFormProps["feilds"] = [
@@ -47,7 +47,7 @@ function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
             values = Object.fromEntries(
                 Object.entries(values).filter(([_key, value]) => value),
             );
-            const updatedUser = await exec(`/users/${user.id}`, "PUT", values);
+            const updatedUser = await fetchApi(`/users/${user.id}`, "PUT", values);
             if (updatedUser) {
                 setUser(updatedUser);
                 toggle();

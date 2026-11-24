@@ -11,7 +11,7 @@ export function useAxios<T>() {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [data, setData] = useState<T>()
-    async function exec(url: string, method: Method, body: Partial<User> | Partial<Mission>): Promise<T | undefined> {
+    async function fetchApi(url: string, method: Method, body: Partial<User> | Partial<Mission>): Promise<T | undefined> {
         try {
             setLoading(true);
             setError("");
@@ -36,7 +36,7 @@ export function useAxios<T>() {
             setLoading(false);
         }
     }
-    return { loading, error, data, exec }
+    return { loading, error, data, fetchApi }
 }
 
 

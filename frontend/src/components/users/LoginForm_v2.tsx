@@ -26,11 +26,11 @@ function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
         },
     ];
     const navigate = useNavigate();
-    const { loading, error, exec } = useAxios<UserWithMission>();
+    const { loading, error, fetchApi } = useAxios<UserWithMission>();
     const setUser = useSetAtom(UserAtom);
     const setMissions = useSetAtom(missionsAtom);
     async function handleSubmit(values: User) {
-        const data = await exec("/users/login", "POST", values);
+        const data = await fetchApi("/users/login", "POST", values);
         if (data) {
             const { id, name, email, missions } = data;
 
@@ -57,7 +57,7 @@ function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
     );
 
     return (
-        <GenericFormCard form={form} title="Login" addButton={addButton}/>
+        <GenericFormCard height={"80vh"} form={form} title="Login" addButton={addButton}/>
     );
 }
 

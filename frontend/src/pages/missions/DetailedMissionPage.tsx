@@ -6,10 +6,10 @@ import { Alert, Center, Loader } from "@mantine/core";
 import { useParams } from "react-router-dom";
 
 function DetailedMissionPage() {
-    const { loading, error, data: mission, exec } = useAxios<Mission>();
+    const { loading, error, data: mission, fetchApi } = useAxios<Mission>();
     const { id } = useParams();
     useEffect(() => {
-        exec(`/missions/${id}`, "GET", {});
+        fetchApi(`/missions/${id}`, "GET", {});
     }, []);
 
     return (

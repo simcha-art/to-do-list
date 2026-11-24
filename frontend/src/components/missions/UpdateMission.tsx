@@ -7,7 +7,7 @@ import GenericForm from "../GenericForm";
 import GenericFormCard from "../GenericFormCard";
 
 function UpdateMission({ mission }: PropCard) {
-    const { loading, error, exec } = useAxios<Mission>();
+    const { loading, error, fetchApi } = useAxios<Mission>();
     const feilds: GenericFormProps["feilds"] = [
         {
             feildName: "title",
@@ -39,7 +39,7 @@ function UpdateMission({ mission }: PropCard) {
             ...values,
             date: values.date.toString().split("-").reverse().join("-"),
         };
-        exec(`/missions/${id}`, "PUT", body);
+        fetchApi(`/missions/${id}`, "PUT", body);
     }
     return (
         <GenericFormCard

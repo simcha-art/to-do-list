@@ -4,13 +4,14 @@ import type { ReactNode } from 'react';
 interface GenericFormCardProps {
     title: string,
     form: ReactNode,
-    addButton?: ReactNode
+    addButton?: ReactNode,
+    height?: string
 }
 
 
-function GenericFormCard({title, form, addButton}: GenericFormCardProps) {
+function GenericFormCard({title, form, addButton, height="88vh"}: GenericFormCardProps) {
   return (
-    <Center h={"88vh"}>
+    <Center h={height}>
 
             <Paper
                 shadow="md"

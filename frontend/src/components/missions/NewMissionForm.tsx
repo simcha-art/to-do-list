@@ -1,12 +1,8 @@
-import {
-    Card,
-    Center,
-    Title,
-} from "@mantine/core";
 import { useAxios } from "../../hooks/useAxios";
 import { useAtomValue } from "jotai";
 import { UserAtom } from "../../atoms/UserAtom";
 import GenericForm, { type GenericFormProps } from "../GenericForm";
+import GenericFormCard from "../GenericFormCard";
 
 interface valuesProp {
     title: string;
@@ -49,25 +45,19 @@ function NewMissionForm() {
     }
     return (
         <>
-            <Center h={"88vh"}>
-                <Card
-                    w={400}
-                    bg={"#dddddd"}
-                    withBorder
-                    bd={"1px solid gray"}
-                    shadow="md"
-                >
-                    <Title>New Mission</Title>
-                    <GenericForm
-                        feilds={feilds}
-                        buttonTitle="Send"
-                        error={error}
-                        loading={loading}
-                        onSubmit={handleSubmit}
-                        successMessage="The mission added successfully"
-                    />
-                </Card>
-            </Center>
+                <GenericFormCard
+                    title="New Mission"
+                    form={
+                        <GenericForm
+                            feilds={feilds}
+                            buttonTitle="Send"
+                            error={error}
+                            loading={loading}
+                            onSubmit={handleSubmit}
+                            successMessage="The mission added successfully"
+                        />
+                    }
+                />
         </>
     );
 }

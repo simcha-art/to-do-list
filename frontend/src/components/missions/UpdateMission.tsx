@@ -1,13 +1,10 @@
-import {
-    Card,
-    Title,
-} from "@mantine/core";
 import type { PropCard } from "./MissionCard";
 import type { Mission } from "../../types";
 import { useAxios } from "../../hooks/useAxios";
 import { useParams } from "react-router-dom";
 import type { GenericFormProps } from "../GenericForm";
 import GenericForm from "../GenericForm";
+import GenericFormCard from "../GenericFormCard";
 
 function UpdateMission({ mission }: PropCard) {
     const { loading, error, exec } = useAxios<Mission>();
@@ -45,15 +42,9 @@ function UpdateMission({ mission }: PropCard) {
         exec(`/missions/${id}`, "PUT", body);
     }
     return (
-        <>
-            <Card
-                withBorder
-                bg={"#ccddff"}
-                bd={"1px solid gray"}
-                p={"lg"}
-                shadow="md"
-            >
-                <Title p={"lg"}> Update Mission Details</Title>
+        <GenericFormCard
+            title="Update Mission Details"
+            form={
                 <GenericForm
                     feilds={feilds}
                     error={error}
@@ -62,8 +53,8 @@ function UpdateMission({ mission }: PropCard) {
                     onSubmit={handleSubmit}
                     successMessage="The mission created successfully"
                 />
-            </Card>
-        </>
+            }
+        />
     );
 }
 

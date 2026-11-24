@@ -8,15 +8,11 @@ import { useAxios } from "../../hooks/useAxios";
 import type { GenericFormProps } from "../GenericForm";
 import GenericForm from "../GenericForm";
 import GenericFormCard from "../GenericFormCard";
+import type { User } from "../../types";
 
-interface User {
-    name?: string;
-    email?: string;
-    password?: string;
-}
 
 function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
-    const { error, loading, fetchApi } = useAxios<User>();
+    const { error, loading, fetchApi } = useAxios<{user: User, token: string}>();
     const setUser = useSetAtom(UserAtom);
     const { name, email } = user;
     const feilds: GenericFormProps["feilds"] = [
@@ -47,8 +43,13 @@ function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
             values = Object.fromEntries(
                 Object.entries(values).filter(([_key, value]) => value),
             );
-            const updatedUser = await fetchApi(`/users/${user.id}`, "PUT", values);
-            if (updatedUser) {
+            const data = await fetchApi(`/users/${user.id}`, "PUT", values);
+            if (data) {
+                let {user: updatedUser, token} = data
+                const {id, name, email} = updatedUser
+                updatedUser = {id, name, email}
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                localStorage.setItem("token", token)
                 setUser(updatedUser);
                 toggle();
             }

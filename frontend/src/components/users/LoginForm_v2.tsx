@@ -6,8 +6,10 @@ import { missionsAtom } from "../../atoms/MissionsAtom";
 import { useAxios } from "../../hooks/useAxios";
 import { useNavigate } from "react-router-dom";
 import GenericForm, { type GenericFormProps } from "../GenericForm";
+import GenericFormCard from "../GenericFormCard";
 
 function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
+    console.log("render LoginForm_V2")
     const feilds: GenericFormProps["feilds"] = [
         {
             feildName: "email",
@@ -40,34 +42,23 @@ function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
         }
     }
 
+    const form = (
+        <GenericForm
+            loading={loading}
+            error={error}
+            feilds={feilds}
+            buttonTitle="Login"
+            onSubmit={handleSubmit}
+        />
+    );
+    const addButton = (
+        <Button onClick={() => navigate("/register")}>
+            Move to registration
+        </Button>
+    );
+
     return (
-        <>
-            <Paper
-                shadow="md"
-                p={"lg"}
-                radius={"md"}
-                w={400}
-                mt={20}
-                withBorder
-                bg={"#bbddff"}
-            >
-                <Flex direction={"column"} gap={"lg"} justify={"center"}>
-                    <Title order={2} p={10}>
-                        Login
-                    </Title>
-                    <GenericForm
-                        loading={loading}
-                        error={error}
-                        feilds={feilds}
-                        buttonTitle="Login"
-                        onSubmit={handleSubmit}
-                    />
-                    <Button onClick={() => navigate("/register")}>
-                        Move to registration
-                    </Button>
-                </Flex>
-            </Paper>
-        </>
+        <GenericFormCard form={form} title="Login" addButton={addButton}/>
     );
 }
 

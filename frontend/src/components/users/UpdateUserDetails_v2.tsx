@@ -17,6 +17,7 @@ import { UserAtom } from "../../atoms/UserAtom";
 import { useAxios } from "../../hooks/useAxios";
 import type { GenericFormProps } from "../GenericForm";
 import GenericForm from "../GenericForm";
+import GenericFormCard from "../GenericFormCard";
 
 interface User {
     name?: string;
@@ -65,24 +66,25 @@ function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
             console.log(error);
         }
     }
+    const form = (
+        <GenericForm
+            feilds={feilds}
+            error={error}
+            loading={loading}
+            buttonTitle="Update"
+            onSubmit={handleSubmit}
+            successMessage="User updated successfully"
+        />
+    );
+    const addButton = <Button onClick={toggle}>Cancel</Button>;
+
     return (
         <Center mih="100vh">
-            <Card withBorder radius="lg" shadow="md" w="100%" maw={440}>
-                <Flex direction={"column"} gap={"lg"} justify={"center"}>
-                    <Title order={2}>
-                        Update user details
-                    </Title>
-                    <GenericForm
-                        feilds={feilds}
-                        error={error}
-                        loading={loading}
-                        buttonTitle="Update"
-                        onSubmit={handleSubmit}
-                        successMessage="User updated successfully"
-                    />
-                    <Button onClick={toggle}>Cancel</Button>
-                </Flex>
-            </Card>
+            <GenericFormCard
+                title="Update user details"
+                form={form}
+                addButton={addButton}
+            />
         </Center>
     );
 }

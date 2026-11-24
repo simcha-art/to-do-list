@@ -1,17 +1,8 @@
 import {
     Center,
-    Card,
-    Title,
-    TextInput,
-    Divider,
-    Flex,
     Button,
-    Loader,
-    Alert,
-    Box,
 } from "@mantine/core";
 import type { UserCardProps } from "./UserDetailsCard";
-import { useForm } from "@mantine/form";
 import { useSetAtom } from "jotai";
 import { UserAtom } from "../../atoms/UserAtom";
 import { useAxios } from "../../hooks/useAxios";
@@ -41,7 +32,7 @@ function UpdateUserDetails_v2({ user, toggle }: UserCardProps) {
             feildName: "email",
             initialValue: email,
             label: "Email",
-            type: "text",
+            type: "email",
             placeHolder: "Enter updated email address",
         },
         {

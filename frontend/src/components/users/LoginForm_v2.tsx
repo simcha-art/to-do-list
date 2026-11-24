@@ -16,7 +16,7 @@ function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
             initialValue: "",
             label: "Email",
             placeHolder: "Enter your email address",
-            type: "text",
+            type: "email",
         },
         {
             feildName: "password",

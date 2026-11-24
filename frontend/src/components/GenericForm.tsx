@@ -8,7 +8,7 @@ interface Feild {
     label: string;
     placeHolder?: string;
     initialValue: any;
-    type: "text" | "password" | "number" | "date" | "textarea"
+    type: "text" | "password" | "number" | "date" | "textarea" | "email"
 }
 
 export interface GenericFormProps {
@@ -44,6 +44,8 @@ function GenericForm({ feilds, buttonTitle, onSubmit, loading, error, successMes
             {feilds.map(f => {
                 if (f.type === "text") {
                     return <TextInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                } else if (f.type === "email") {
+                    return <TextInput label={f.label} type="email" key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "password") {
                     return <PasswordInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "number") {

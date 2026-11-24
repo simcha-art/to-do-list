@@ -1,7 +1,30 @@
 from flask import Blueprint, request, jsonify, abort
 from services.missions_service import mission_service
+from flask import Blueprint, request, abort
+import jwt
+from jwt.exceptions import PyJWTError
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+JWT_SECRET = os.getenv("JWT_SECRET")
+JWT_ALGORITHM = "HS256"
+
+
 
 router = Blueprint("missions", __name__)
+
+@router.before_request
+def authentication():
+    if request.method == "OPTIONS":
+        return 
+    try:
+        token = request.headers.get("Authorization").split(" ")[1]
+        decoded = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        request.user = decoded
+    except Exception as e:
+        print(e)
+        abort(401, "Invalid token")
 
 
 @router.get("")

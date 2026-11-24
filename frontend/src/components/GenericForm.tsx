@@ -43,15 +43,15 @@ function GenericForm({ feilds, buttonTitle, onSubmit, loading, error, successMes
 
             {feilds.map(f => {
                 if (f.type === "text") {
-                    return <TextInput label={f.label} key={crypto.randomUUID()} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    return <TextInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "password") {
-                    return <PasswordInput label={f.label} key={crypto.randomUUID()} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    return <PasswordInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "number") {
-                    return <NumberInput label={f.label} key={crypto.randomUUID()} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
+                    return <NumberInput label={f.label} key={f.feildName} placeholder={f.placeHolder} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "date") {
-                    return <MaskedDateInput clearable key={crypto.randomUUID()} withDropdown={false} label={f.label} {...form.getInputProps(f.feildName)}/>
+                    return <MaskedDateInput clearable key={f.feildName} withDropdown={false} label={f.label} {...form.getInputProps(f.feildName)}/>
                 } else if (f.type === "textarea") {
-                    return <Textarea label={f.label} key={crypto.randomUUID()} placeholder={f.placeHolder} rows={4} {...form.getInputProps(f.feildName)}/>
+                    return <Textarea label={f.label} key={f.feildName} placeholder={f.placeHolder} rows={4} {...form.getInputProps(f.feildName)}/>
                 }
             })}
             <Center>

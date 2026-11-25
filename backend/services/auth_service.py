@@ -18,17 +18,25 @@ def generate_token(user):
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
 
+def authentication():
+    if request.method == "OPTIONS":
+        return 
+
+    try:
+        token = request.headers.get("Authorization", "1 1").split(" ")[1]
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        request.user = payload
+    except jwt.exceptions.PyJWTError as e:
+        print(e)
+        abort(401, "You are unauthorized")
+
+
 def auth_decorator(func):
     def wrapper(*args, **kwargs):
-        try:
-            token = request.headers.get("Authorization", "1 1").split(" ")[1]
-            payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
-            request.user = payload
-            return func(*args, **kwargs)
-        except jwt.exceptions.PyJWTError as e:
-            print(e)
-            abort(401, "You are unauthorized")
+        authentication()
+        return func(*args, **kwargs)
     return wrapper
+
 
 
 

@@ -1,17 +1,24 @@
 from pydantic import BaseModel, EmailStr
+from typing import Literal
 from db.connection import session
 from db.repository import UserRepository
 from bcrypt import checkpw, gensalt, hashpw
+
+
+Role = Literal["p_admin", "group_admin", "user"]
 
 class NewUserSchema(BaseModel):
     name: str
     email: EmailStr
     password: str
+    role: Role = "user"
+    
 
 class UpdateUserSchema(BaseModel):
     name: str | None = None
     email: EmailStr | None = None
     password: str | None = None
+    role: Role | None = None
 
 class LoginSchema(BaseModel):
     email: EmailStr

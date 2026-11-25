@@ -1,5 +1,5 @@
-import { Alert, Center, Grid, Loader, Stack, Title } from "@mantine/core";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { Alert, Center, Loader, Stack, Title } from "@mantine/core";
+import { useAtom } from "jotai";
 import { missionsAtom } from "../../atoms/MissionsAtom";
 import MissionCard from "./MissionCard";
 import { useAxios } from "../../hooks/useAxios";

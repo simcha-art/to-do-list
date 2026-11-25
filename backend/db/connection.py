@@ -1,5 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os
+from dotenv import load_dotenv
 
-engine = create_engine("postgresql+psycopg2://simcha:simcha@localhost:5432/to-dos")
+load_dotenv()
+POSGRESS_URL = os.getenv("POSGRESS_URL")
+
+
+engine = create_engine(POSGRESS_URL)
 session = sessionmaker(bind=engine)

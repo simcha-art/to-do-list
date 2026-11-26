@@ -15,11 +15,18 @@ class User(Base):
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str] 
     role: Mapped[str] = mapped_column(server_default="user")
-    groups: Mapped[List["Group"]] = relationship(back_populates="admin")
+
+    group_id: Mapped[int | None] = mapped_column(ForeignKey("groups.id"), nullable=True, server_default=None )
+    
+    managed_group: Mapped["Group"] = relationship(
+        back_populates="admin", 
+        foreign_keys="groups.admin_id",
+        uselist=False
+        )
     missions: Mapped[List["Mission"]] = relationship(back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
-        return f"User(id={self.id}, name={self.name}, email={self.email}, role={self.role},  password=****)"
+        return f"User(id={self.id}, name={self.name}, email={self.email}, role={self.role}, password=****)"
 
     def to_dict(self):
         return {
@@ -28,7 +35,7 @@ class User(Base):
             "email": self.email,
             "password": self.password,
             "role": self.role,
-            "groups": [group.to_dict() for group in self.groups],
+            "managed_group": self.managed_group.to_dict() if self.managed_group else None,
             "missions": [mission.to_dict() for mission in self.missions]
         }
 
@@ -67,20 +74,31 @@ class Group(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     admin_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     name: Mapped[str]
-    admin: Mapped["User"] = relationship(back_populates="groups")
+
+    admin: Mapped["User"] = relationship(
+        back_populates="groups",
+        foreign_keys=[admin_id]
+        )
+    users: Mapped[List["User"]] = relationship(
+        foreign_keys="User.group_id"
+    )
+
 
     def __repr__(self):
-        return f"Group(id={self.id} admin_id={self.admin_id} admin_name={self.admin.name} group_name={self.group_name})"
+        return f"Group(id={self.id} admin_id={self.admin_id} admin_name={self.admin.name} group_name={self.name})"
 
     def to_dict(self):
         return {
             "id": self.id,
+            "name": self.name,
             "admin": {
                 "id": self.admin.id,
                 "name": self.admin.name,
                 "email": self.admin.email
             },
-            "name": self.name
+            "users": [
+                user.to_dict() for user in self.users
+            ]
         }
     
 

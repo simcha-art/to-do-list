@@ -1,49 +1,37 @@
-import { Badge, Button, Card, Flex, Stack, Title } from "@mantine/core";
+import { Badge, Button, Flex, Stack, Title } from "@mantine/core";
 import type { Mission } from "../../types";
 import { useNavigate } from "react-router-dom";
 
 export interface PropCard {
-    mission: Mission;
+    item: Mission;
 }
 
-function MissionCard({ mission }: PropCard) {
+function MissionCard({ item }: PropCard) {
     const navigate = useNavigate();
-    const shortDate = new Date(mission.date).toLocaleDateString("he-IL")
+    const shortDate = new Date(item.date).toLocaleDateString("he-IL");
     return (
-        <Card
-            bg={"#ccddff"}
-            radius={"md"}
-            p={10}
-            withBorder
-            bd={"2px solid gray"}
-            w={"30vw"}
-        >
-                <Stack gap={"lg"}>
-                <Flex
-                    justify={"space-between"}
-                    align={"center"}
-                    bg={"#ccddff"}
-                    gap={"lg"}
-                >
-                    <Badge radius={"md"}>{shortDate}</Badge>
-                    <Badge
-                        bg={mission.is_finished ? "green" : "gray"}
-                        radius={"md"}   
-                    >
-                        {mission.is_finished ? "finished" : "active"}
-                    </Badge>
-                </Flex>
-                    <Title order={2} fw={700} size={"1.8rem"}>{mission.title}</Title>
-                    <Button
-                        bg={"orange"}
-                        onClick={() =>
-                            navigate(`/mission-details/${mission.id}`)
-                        }
-                    >
-                        Show details
-                    </Button>
-                </Stack>
-        </Card>
+        <Stack gap={"lg"}>
+            <Flex
+                justify={"space-between"}
+                align={"center"}
+                bg={"#ccddff"}
+                gap={"lg"}
+            >
+                <Badge radius={"md"}>{shortDate}</Badge>
+                <Badge bg={item.is_finished ? "green" : "gray"} radius={"md"}>
+                    {item.is_finished ? "finished" : "active"}
+                </Badge>
+            </Flex>
+            <Title order={2} fw={700} size={"1.8rem"}>
+                {item.title}
+            </Title>
+            <Button
+                bg={"orange"}
+                onClick={() => navigate(`/mission-details/${item.id}`)}
+            >
+                Show details
+            </Button>
+        </Stack>
     );
 }
 

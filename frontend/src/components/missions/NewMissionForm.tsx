@@ -1,8 +1,8 @@
 import { useAxios } from "../../hooks/useAxios";
 import { useAtomValue } from "jotai";
 import { UserAtom } from "../../atoms/UserAtom";
-import GenericForm, { type GenericFormProps } from "../GenericForm";
-import GenericFormCard from "../GenericFormCard";
+import GenericForm, { type GenericFormProps } from "../generics/GenericForm";
+import GenericFormCard from "../generics/GenericFormCard";
 
 interface valuesProp {
     title: string;

@@ -2,29 +2,29 @@ import type { PropCard } from "./MissionCard";
 import type { Mission } from "../../types";
 import { useAxios } from "../../hooks/useAxios";
 import { useParams } from "react-router-dom";
-import type { GenericFormProps } from "../GenericForm";
-import GenericForm from "../GenericForm";
-import GenericFormCard from "../GenericFormCard";
+import type { GenericFormProps } from "../generics/GenericForm";
+import GenericForm from "../generics/GenericForm";
+import GenericFormCard from "../generics/GenericFormCard";
 
-function UpdateMission({ mission }: PropCard) {
+function UpdateMission({ item }: PropCard) {
     const { loading, error, fetchApi } = useAxios<Mission>();
     const feilds: GenericFormProps["feilds"] = [
         {
             feildName: "title",
             label: "Title",
-            initialValue: mission.title,
+            initialValue: item.title,
             type: "text",
         },
         {
             feildName: "desc",
             label: "Description",
-            initialValue: mission.desc,
+            initialValue: item.desc,
             type: "textarea",
         },
         {
             feildName: "date",
             label: "To be completed by",
-            initialValue: new Date(mission.date)
+            initialValue: new Date(item.date)
                 .toISOString()
                 .split("T")[0]
                 .split("-")

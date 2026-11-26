@@ -3,9 +3,9 @@ import type { User } from "../../types";
 import { useSetAtom } from "jotai";
 import { UserAtom } from "../../atoms/UserAtom";
 import { useAxios } from "../../hooks/useAxios";
-import type { GenericFormProps } from "../GenericForm";
-import GenericForm from "../GenericForm";
-import GenericFormCard from "../GenericFormCard";
+import type { GenericFormProps } from "../generics/GenericForm";
+import GenericForm from "../generics/GenericForm";
+import GenericFormCard from "../generics/GenericFormCard";
 
 function Register_v2({ onSuccess }: { onSuccess: () => void }) {
     const feilds: GenericFormProps["feilds"] = [

@@ -5,8 +5,8 @@ import type { User, UserWithMission } from "../../types";
 import { missionsAtom } from "../../atoms/MissionsAtom";
 import { useAxios } from "../../hooks/useAxios";
 import { useNavigate } from "react-router-dom";
-import GenericForm, { type GenericFormProps } from "../GenericForm";
-import GenericFormCard from "../GenericFormCard";
+import GenericForm, { type GenericFormProps } from "../generics/GenericForm";
+import GenericFormCard from "../generics/GenericFormCard";
 
 function LoginForm_v2({ onSuccess }: { onSuccess: () => void }) {
     const feilds: GenericFormProps["feilds"] = [
